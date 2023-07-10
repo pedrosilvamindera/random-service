@@ -51,7 +51,9 @@ jobs:
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v1
         with:
-          path: ~/.m2
+          path: |
+            ~/.m2/repository/
+            ~/.m2/wrapper/
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Run tests with maven
@@ -67,6 +69,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v1
+        with:
+          path: |
+            ~/.m2/repository/
+            ~/.m2/wrapper/
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Checktyle
         run: ./mvnw -B checkstyle:check

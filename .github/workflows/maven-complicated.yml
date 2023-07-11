@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.m2/build-cache/
-        key: ${{github.run_number}}-${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        key: build-cache-${{github.run_number}}
         restore-keys: ${{ runner.os }}-m2
     - name: Build with Maven
       run: ./mvnw -B compile
@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2/build-cache/
-          key: ${{github.run_number}}-${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: build-cache-${{github.run_number}}
           restore-keys: ${{ runner.os }}-m2
       - name: Get target folder
         uses: actions/download-artifact@v3
@@ -116,7 +116,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.m2/build-cache/
-          key: ${{github.run_number}}-${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          key: build-cache-${{github.run_number}}
           restore-keys: ${{ runner.os }}-m2
       - name: Get target folder
         uses: actions/download-artifact@v3

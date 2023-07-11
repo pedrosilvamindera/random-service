@@ -31,9 +31,15 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
+    - name: ls
+      run: ls ~/.m2
     - name: Build with Maven
       run: ./mvnw -B compile
-
+    - name: Upload target folder
+      uses: actions/upload-artifact@v3
+      with:
+        name: target
+        path: app/target
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@v3.0.2
@@ -54,8 +60,20 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Get target folder
+        uses: actions/download-artifact@v3
+        with:
+          name: target
+          path: app/target
+      - name: ls
+        run: ls ~/.m2
       - name: Run tests with maven
         run: ./mvnw -B test
+      - name: Upload target folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: target
+          path: app/target
 
   checkstyle:
     needs: compile
@@ -86,6 +104,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Get target folder
+        uses: actions/download-artifact@v3
+        with:
+          name: target
+          path: app/target
       - name: Package
         run: ./mvnw -B package
       - name: Upload artifacts

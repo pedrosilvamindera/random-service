@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Java CI with Maven Complicated
 
 on:
   workflow_dispatch:
@@ -72,7 +72,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Checktyle
+      - name: Package
         run: ./mvnw -B package
       - name: Upload artifacts
         uses: actions/upload-artifact@v3

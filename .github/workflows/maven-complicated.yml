@@ -62,8 +62,6 @@ jobs:
         with:
           name: target
           path: app/target
-      - name: ls
-        run: ls ~/.m2
       - name: Run tests with maven
         run: ./mvnw -B test
       - name: Upload target folder
@@ -87,6 +85,7 @@ jobs:
         run: ./mvnw -B checkstyle:check
 
   upload-dependency-graph:
+    if: github.ref == 'refs/heads/main'
     needs: compile
     runs-on: ubuntu-latest
     steps:

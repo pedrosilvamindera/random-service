@@ -25,11 +25,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: maven
     - name: Cache the Maven packages to speed up build
       uses: actions/cache@v1
       with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        path: ~/.m2/build-cache/
+        key: ${{github.run_number}}-${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: ls
       run: ls ~/.m2
@@ -54,11 +55,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: maven
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v1
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/build-cache/
+          key: ${{github.run_number}}-${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Get target folder
         uses: actions/download-artifact@v3
@@ -85,6 +87,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: maven
       - name: Checktyle
         run: ./mvnw -B checkstyle:check
 
@@ -98,11 +101,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: maven
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v1
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/build-cache/
+          key: ${{github.run_number}}-${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Get target folder
         uses: actions/download-artifact@v3

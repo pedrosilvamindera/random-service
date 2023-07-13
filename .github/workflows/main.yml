@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven Complicated
+name: Java CI with Maven
 
 on:
   workflow_dispatch:
@@ -30,6 +30,7 @@ jobs:
         run: ./mvnw -B package -DskipTests
 
   build-and-test:
+    needs: dependency-download
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

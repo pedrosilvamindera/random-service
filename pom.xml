@@ -36,6 +36,7 @@
           <failsOnError>true</failsOnError>
           <failOnViolation>true</failOnViolation>
           <configLocation>google_checks.xml</configLocation>
+          <suppressionsLocation>./.mvn/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
           <violationSeverity>warning</violationSeverity>
           <maxAllowedViolations>1</maxAllowedViolations>
         </configuration>

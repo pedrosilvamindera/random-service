@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Maven resolve dependencies
-        run: ./mvnw -B dependency:resolve
+        run: ./mvnw -B compile
 
   build-and-test:
     needs: dependency-download
@@ -66,7 +66,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: checkstyle-report
-          path: target/site/checkstyle-aggregate.html
+          path: target/site/
 
   upload-dependency-graph:
     if: github.ref == 'refs/heads/main'

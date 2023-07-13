@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Maven resolve dependencies
-        run: ./mvnw -B compile
+        run: ./mvnw -B package
 
   build-and-test:
     needs: dependency-download

@@ -26,7 +26,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build and run tests with Maven
+      - name: Maven resolve dependencies
         run: ./mvnw -B dependency:resolve
 
   build-and-test:

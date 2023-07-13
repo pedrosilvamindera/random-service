@@ -84,7 +84,7 @@ jobs:
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v3.0.2
 
-  build-and-push-docker:
+  create-and-push-docker-img:
     if: github.ref == 'refs/heads/main'
     needs: [build-and-test, checkstyle, upload-dependency-graph]
     runs-on: ubuntu-latest

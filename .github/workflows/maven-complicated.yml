@@ -45,7 +45,13 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Checktyle
-        run: ./mvnw -B checkstyle:check
+        run: ./mvnw -B checkstyle:checkstyle-aggregate  checkstyle:check
+      - name: Upload checkstyle report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: checkstyle-report
+          path: target/site/checkstyle-aggregate.html
 
   upload-dependency-graph:
     if: github.ref == 'refs/heads/main'

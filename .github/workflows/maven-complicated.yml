@@ -16,6 +16,19 @@ on:
     branches: [ "main" ]
 
 jobs:
+  dependency-download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Maven resolve dependencies
+        run: ./mvnw -B package -DskipTests
+
   build-and-test:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +48,7 @@ jobs:
         path: app/target/*.jar
 
   checkstyle:
+    needs: dependency-download
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -45,10 +59,17 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Checktyle
-        run: ./mvnw -B checkstyle:check
+        run: ./mvnw -B checkstyle:checkstyle-aggregate  checkstyle:check
+      - name: Upload checkstyle report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: checkstyle-report
+          path: target/site/
 
   upload-dependency-graph:
     if: github.ref == 'refs/heads/main'
+    needs: dependency-download
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
